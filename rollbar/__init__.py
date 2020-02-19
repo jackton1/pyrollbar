@@ -433,6 +433,9 @@ def report_message(message, level='error', request=None, extra_data=None, payloa
         log.exception("Exception while reporting message to Rollbar. %r", e)
 
 
+ld_features = []
+
+
 def send_payload(payload, access_token):
     """
     Sends a payload object, (the result of calling _build_payload() + _serialize_payload()).
@@ -678,6 +681,8 @@ def _report_exc_info(exc_info, request, extra_data, payload_data, level=None):
     if extra_trace_data and not extra_data:
         data['custom'] = extra_trace_data
 
+    data['features'] = ld_features
+
     request = _get_actual_request(request)
     _add_request_data(data, request)
     _add_person_data(data, request)
@@ -763,6 +768,7 @@ def _report_message(message, level, request, extra_data, payload_data):
     _add_person_data(data, request)
     _add_lambda_context_data(data)
     data['server'] = _build_server_data()
+    data['features'] = ld_features
 
     if payload_data:
         data = dict_merge(data, payload_data)
