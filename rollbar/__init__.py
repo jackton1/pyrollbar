@@ -433,7 +433,7 @@ def report_message(message, level='error', request=None, extra_data=None, payloa
         log.exception("Exception while reporting message to Rollbar. %r", e)
 
 
-ld_features = []
+ld_features = {}
 
 
 def send_payload(payload, access_token):
