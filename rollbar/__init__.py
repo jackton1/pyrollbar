@@ -681,7 +681,9 @@ def _report_exc_info(exc_info, request, extra_data, payload_data, level=None):
     if extra_trace_data and not extra_data:
         data['custom'] = extra_trace_data
 
+    global ld_features
     data['features'] = ld_features
+    ld_features = {}
 
     request = _get_actual_request(request)
     _add_request_data(data, request)
